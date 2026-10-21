@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { DEFAULT_MATCH_SECONDS, createInitialState } from "@/game/constants";
-import { tickGame, resetKickoff, type GameCommand, type InputState } from "@/game/engine";
+import { tickGame, resetKickoff, emptyInput, type GameCommand, type InputState } from "@/game/engine";
 import { playGameSound } from "@/game/audio";
 import type { Difficulty, GamePlayer, GameState, MatchStatus } from "@/game/types";
 
