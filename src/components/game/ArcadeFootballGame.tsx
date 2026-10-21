@@ -22,6 +22,7 @@ export default function ArcadeFootballGame() {
   const dimensionsRef = useRef({ width: 960, height: 540, dpr: 1 });
   const lastFrameRef = useRef(0);
   const lastHudRef = useRef(0);
+  const rafRef = useRef(0);
   const shotStartedRef = useRef<number | null>(null);
 
   const [status, setStatus] = useState<MatchStatus>("menu");
@@ -407,12 +408,12 @@ export default function ArcadeFootballGame() {
       }
 
       drawPitch(dimensionsRef.current.width, dimensionsRef.current.height, state);
-      requestAnimationFrame(frame);
+      rafRef.current = requestAnimationFrame(frame);
     };
 
-    const frameId = requestAnimationFrame(frame);
+    rafRef.current = requestAnimationFrame(frame);
     return () => {
-      cancelAnimationFrame(frameId);
+      cancelAnimationFrame(rafRef.current);
       observer.disconnect();
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
