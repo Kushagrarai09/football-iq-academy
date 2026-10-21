@@ -53,7 +53,9 @@ export function shootBall(state: GameState, chargeSeconds = 0) {
   const targetY = clamp(0.5 + (Math.random() - 0.5) * 0.08, 0.42, 0.58);
   const goalDistance = Math.abs((player.team === "home" ? 0.965 : 0.035) - player.x);
   const speed = clamp(1.22 + power * 0.78 + (1 - goalDistance) * 0.22, 1.15, 2.1);
-  kickBall(state, player, attackDirection(player.team) * speed, (targetY - player.y) * 0.72, 0.13 + power * 0.06);
+  const travelX = Math.abs((player.team === "home" ? 0.965 : 0.035) - player.x);
+  const verticalSpeed = clamp((targetY - (player.y + 0.015)) * speed / Math.max(travelX, 0.12), -0.72, 0.72);
+  kickBall(state, player, attackDirection(player.team) * speed, verticalSpeed, 0.13 + power * 0.06);
   player.actionCooldown = 0.34;
   return true;
 }
@@ -178,7 +180,9 @@ function updateOutfieldAI(state: GameState, dt: number) {
       if (toGoal < (state.difficulty === "hard" ? 0.42 : 0.34) && player.actionCooldown <= 0) {
         player.aiMode = "shooting";
         const targetY = clamp(0.5 + (Math.random() - 0.5) * (state.difficulty === "hard" ? 0.04 : 0.12), 0.4, 0.6);
-        kickBall(state, player, dir * (state.difficulty === "hard" ? 1.7 : 1.35), (targetY - ball.y) * 0.72, 0.1);
+        const shotSpeed = state.difficulty === "hard" ? 1.7 : 1.35;
+        const verticalSpeed = clamp((targetY - (player.y + 0.015)) * shotSpeed / Math.max(toGoal, 0.12), -0.72, 0.72);
+        kickBall(state, player, dir * shotSpeed, verticalSpeed, 0.1);
         player.actionCooldown = 0.55;
       } else {
         player.aiMode = "attacking";
@@ -217,6 +221,7 @@ export function tickGame(state: GameState, input: InputState, dt: number) {
   updateControlledPlayer(state, input, step);
   updateOutfieldAI(state, step);
   for (const keeper of state.players.filter((p) => p.role === "goalkeeper")) {
+    keeper.actionCooldown = Math.max(0, keeper.actionCooldown - step);
     keeperAI(state, step, keeper);
     if (state.ball.possession === keeper.id && keeper.actionCooldown <= 0) {
       const dir = attackDirection(keeper.team);
