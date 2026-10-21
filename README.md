@@ -275,3 +275,38 @@ Until a license is added to the repository, assume that standard copyright appli
 **Football IQ Academy**
 
 </div>
+
+## Arcade Football Game
+
+The `/play` route contains a small-sided, side-view football game prototype with simple physics and rule-based computer opponents.
+
+### Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Open `http://localhost:3000/play`.
+
+### Controls
+
+- `A` / `D` or arrow keys: move
+- `W` / `S` or up/down arrows: move through the play area
+- `Shift`: sprint
+- Hold `Space`, then release: charge and take a shot
+- `J`: pass to a teammate
+- `E`: switch the controlled teammate
+- `P`: pause or resume
+- `F`: enter or exit fullscreen
+
+The match offers selectable 1, 2 or 3 minute durations, easy/normal/hard AI settings, sound on/off, score, kickoff reset and a full-time screen. The simulation is intentionally simplified; it is not a full reproduction of football laws or professional game physics.
+
+### Game checks
+
+```bash
+npm test
+npm run build
+```
+
+The GitHub Actions workflow `.github/workflows/game-checks.yml` runs simulation tests and builds the Next.js application for pull requests into `main`.
