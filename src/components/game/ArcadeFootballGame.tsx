@@ -159,7 +159,7 @@ export default function ArcadeFootballGame() {
         const down = keys.has("s") || keys.has("arrowdown");
         const sprint = keys.has("shift");
         const speed = sprint ? 0.78 : 0.52;
-        const friction = Math.pow(0.0009, dt);
+        const friction = Math.pow(0.08, dt);
         p.vx = (right ? 1 : 0) - (left ? 1 : 0);
         p.vy = (down ? 1 : 0) - (up ? 1 : 0);
         const length = Math.hypot(p.vx, p.vy) || 1;
@@ -169,7 +169,7 @@ export default function ArcadeFootballGame() {
         p.x = clamp(p.x, 0.055, 0.945);
         p.y = clamp(p.y, 0.13, 0.91);
         p.crouching = down && !left && !right;
-        if (keys.has("w") && !p.jumping && !up) {
+        if (keys.has(" ") && !p.jumping && !up) {
           p.jumping = true;
           p.jumpVelocity = 0.95;
         }
