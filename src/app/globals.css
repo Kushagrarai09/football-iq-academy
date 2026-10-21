@@ -50,3 +50,17 @@
 @media(max-width:900px){.arcade-controls{grid-template-columns:repeat(4,minmax(0,1fr))}.play-page__intro{align-items:start;flex-direction:column}.play-page__pill{white-space:normal}.arcade-game--fullscreen .arcade-stage{height:calc(100vh - 330px)}}
 @media(max-width:600px){.play-page{padding-top:18px}.play-page__intro h1{font-size:46px}.play-page__intro p{font-size:14px}.arcade-game{padding:12px;border-radius:14px}.arcade-game__topbar{align-items:flex-start;flex-direction:column}.arcade-game__actions{justify-content:flex-start}.arcade-stage{min-height:230px;aspect-ratio:4/3}.arcade-game__footer{align-items:flex-start;flex-direction:column}.arcade-hint{text-align:left}.arcade-controls{grid-template-columns:repeat(2,minmax(0,1fr))}.arcade-game--fullscreen{padding:10px}.arcade-game--fullscreen .arcade-stage{height:calc(100vh - 400px);min-height:220px}.arcade-game--fullscreen .arcade-controls{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.arcade-button,.feature{transition:none}}
+
+/***** Arcade football game extension *****/
+.arcade-scoreboard{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin-bottom:12px;border:1px solid var(--line);border-radius:12px;background:#091510;padding:12px 16px}
+.arcade-scoreboard>div{display:flex;align-items:center;gap:10px}.arcade-scoreboard>div:last-child{justify-content:flex-end}
+.arcade-scoreboard b{font-size:10px;color:var(--muted);letter-spacing:.14em}.arcade-scoreboard strong{font-size:27px;line-height:1;letter-spacing:-.06em}
+.arcade-scoreboard__time{text-align:center;display:grid;gap:3px;font-weight:900;font-size:22px;font-variant-numeric:tabular-nums}.arcade-scoreboard__time small{font-size:9px;color:var(--muted);letter-spacing:.14em}
+.arcade-team-dot{display:inline-block;width:9px;height:9px;border-radius:50%}.arcade-team-dot--home{background:var(--accent);box-shadow:0 0 10px #b8ff5470}.arcade-team-dot--away{background:#fafaf6}
+.arcade-match-options{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:15px 0;border-bottom:1px solid var(--line)}
+.arcade-match-options label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;font-weight:700}
+.arcade-match-options select{background:#07110f;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px 10px;outline:none}
+.arcade-match-options select:focus-visible{border-color:var(--accent)}
+.arcade-game--fullscreen .arcade-stage{height:calc(100vh - 330px);min-height:240px;aspect-ratio:auto}
+.arcade-game--fullscreen .arcade-stage:fullscreen{height:100vh;width:100vw;border:0;border-radius:0}
+@media(max-width:600px){.arcade-scoreboard{padding:10px;gap:7px}.arcade-scoreboard strong{font-size:22px}.arcade-scoreboard b{font-size:9px}.arcade-scoreboard__time{font-size:18px}.arcade-match-options{align-items:flex-start}.arcade-match-options label{flex-direction:column;align-items:flex-start}.arcade-game--fullscreen .arcade-stage{height:calc(100vh - 410px);min-height:200px}}
