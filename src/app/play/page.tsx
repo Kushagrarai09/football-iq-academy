@@ -15,7 +15,7 @@ export default function PlayPage() {
         <div>
           <div className="arcade-eyebrow">A NEW WAY TO LEARN FOOTBALL</div>
           <h1>Get on the <span>pitch.</span></h1>
-          <p>Move, sprint, shoot and pass in a classic side-view arcade playground. This is the first playable build: more players and smarter opposition are coming next.</p>
+          <p>Move, sprint, shoot and pass in a classic side-view arcade playground. Play short small-sided matches, build attacks with teammates, and face computer-controlled opponents.</p>
         </div>
         <div className="play-page__pill">🎮 <span>PHASE 1 · PLAYABLE PROTOTYPE</span></div>
       </div>
