@@ -1,0 +1,25 @@
+name: Football game checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "feat/arcade-football-game"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run simulation tests
+        run: npm test
+      - name: Build Next.js app
+        run: npm run build
