@@ -123,7 +123,7 @@ export default function ArcadeFootballGame() {
       const isTyping = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
       if (isTyping) return;
       const key = event.key.toLowerCase();
-      const gameKeys = ["arrowleft", "arrowright", "arrowup", "arrowdown", " ", "w", "a", "s", "d", "j", "e", "p", "f", "shift"];
+      const gameKeys = ["arrowleft", "arrowright", "arrowup", "arrowdown", " ", "w", "a", "s", "d", "j", "e", "p", "f", "shift", "tab"];
       if (gameKeys.includes(key) && (document.activeElement === canvas || stage.contains(document.activeElement))) event.preventDefault();
       if (event.repeat && [" ", "j", "p", "f", "e"].includes(key)) return;
       keysRef.current.add(key);
