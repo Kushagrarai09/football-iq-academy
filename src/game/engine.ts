@@ -4,6 +4,7 @@ import {clamp,distance,givePossession,kickBall,keeperAI,moveToward,releasePosses
 export type GameCommand="left"|"right"|"up"|"down"|"sprint"|"shoot"|"pass"|"switch"|"jump";
 export type InputState=Record<GameCommand,boolean>;
 export const emptyInput=():InputState=>({left:false,right:false,up:false,down:false,sprint:false,shoot:false,pass:false,switch:false,jump:false});
+export function emptyInputState(): InputState { return {left:false,right:false,up:false,down:false,sprint:false,shoot:false,pass:false,switch:false,jump:false}; }
 const teammates=(s:GameState,t:TeamId)=>s.players.filter(p=>p.team===t&&p.role!=="goalkeeper");
 const opponents=(s:GameState,t:TeamId)=>s.players.filter(p=>p.team!==t&&p.role!=="goalkeeper");
 const direction=(t:TeamId)=>t==="home"?1:-1;
