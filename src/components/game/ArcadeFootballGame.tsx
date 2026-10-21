@@ -15,6 +15,7 @@ const formatTime = (seconds: number) => {
 export default function ArcadeFootballGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const gameRef = useRef<HTMLDivElement>(null);
   const keysRef = useRef(new Set<string>());
   const inputRef = useRef<InputState>(emptyInput());
   const stateRef = useRef<GameState>(createInitialState(DEFAULT_MATCH_SECONDS));
@@ -22,6 +23,7 @@ export default function ArcadeFootballGame() {
   const dimensionsRef = useRef({ width: 960, height: 540, dpr: 1 });
   const lastFrameRef = useRef(0);
   const lastHudRef = useRef(0);
+  const rafRef = useRef(0);
   const rafRef = useRef(0);
   const shotStartedRef = useRef<number | null>(null);
 
@@ -94,7 +96,7 @@ export default function ArcadeFootballGame() {
   }, [difficulty, duration, muted, publishStatus]);
 
   const toggleFullscreen = useCallback(async () => {
-    const target = stageRef.current;
+    const target = gameRef.current;
     if (!target) return;
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
@@ -424,7 +426,7 @@ export default function ArcadeFootballGame() {
   }, [publishStatus, toggleFullscreen]);
 
   return (
-    <div className={`arcade-game ${fullscreen ? "arcade-game--fullscreen" : ""}`}>
+    <div ref={gameRef} className={`arcade-game ${fullscreen ? "arcade-game--fullscreen" : ""}`}>
       <div className="arcade-game__topbar">
         <div><span className="arcade-eyebrow">ARCADE MODE · SMALL-SIDED MATCH</span><h2>Kick-off Club</h2><p>Build attacks with your teammates and face computer-controlled opponents.</p></div>
         <div className="arcade-game__actions">
