@@ -72,6 +72,19 @@ describe("arcade football simulation", () => {
     expect(state.score.home).toBe(1);
   });
 
+  it("keeps an invalid goal-line shot out of the goal", () => {
+    const state = createInitialState();
+    state.status = "playing";
+    state.ball.possession = null;
+    state.players.forEach(p => { p.hasPossession = false; });
+    state.ball.x = 0.963;
+    state.ball.y = 0.25;
+    state.ball.vx = 1.5;
+    tickGame(state, emptyInput(), 0.033);
+    expect(state.score.home).toBe(0);
+    expect(state.ball.x).toBeLessThanOrEqual(0.965);
+  });
+
   it("does not simulate when paused", () => {
     const state = createInitialState();
     state.status = "paused";
