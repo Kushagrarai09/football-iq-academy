@@ -125,8 +125,8 @@ export default function ArcadeFootballGame() {
       if (key in keyMap) {
         keysRef.current.add(key);
         const command = keyMap[key];
-        if (command === "shoot") inputRef.current.shoot = true;
-        else if (command === "pass") inputRef.current.pass = true;
+        if (command === "shoot" && stateRef.current.status === "playing") { inputRef.current.shoot = true; setShots(v=>v+1); playGameSound("kick",stateRef.current.muted); }
+        else if (command === "pass" && stateRef.current.status === "playing") { inputRef.current.pass = true; setPasses(v=>v+1); playGameSound("kick",stateRef.current.muted); }
         else if (command === "switch") {
           const state = stateRef.current;
           const outfield = state.players.filter(p => p.team === "home" && p.role !== "goalkeeper");
@@ -226,9 +226,9 @@ export default function ArcadeFootballGame() {
         }
         if(state.status==="goal"){
           state.goalTimer-=dt;
-          if(state.goalTimer<=0)resetKickoff(state,true);
+          if(state.goalTimer<=0){resetKickoff(state,true);setStatus("playing");setMessage("Kick-off! Play on.");}
         }
-        if(state.status==="finished"){
+        if(state.status==="finished" && status!=="finished"){
           setStatus("finished");setMessage("Full time — match complete.");playGameSound("whistle",state.muted);
         }
       }
