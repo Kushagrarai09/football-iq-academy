@@ -1,16 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { DEFAULT_MATCH_SECONDS, PITCH } from "@/game/constants";
-import { createInitialState } from "@/game/constants";
+import { DEFAULT_MATCH_SECONDS, createInitialState } from "@/game/constants";
 import { tickGame, resetKickoff, type GameCommand, type InputState } from "@/game/engine";
 import { playGameSound } from "@/game/audio";
 import type { Difficulty, GamePlayer, GameState, MatchStatus } from "@/game/types";
-import { distance } from "@/game/physics";
 
 const BASE = { w: 960, h: 540 };
-const emptyInput = (): InputState => ({ left: false, right: false, up: false, down: false, sprint: false, shoot: false, pass: false, switch: false, jump: false });
-const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
 const formatTime = (seconds: number) => {
   const remaining = Math.max(0, Math.ceil(seconds));
   return `${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, "0")}`;
@@ -23,8 +19,7 @@ export default function ArcadeFootballGame() {
   const inputRef = useRef<InputState>(emptyInput());
   const stateRef = useRef<GameState>(createInitialState(DEFAULT_MATCH_SECONDS));
   const dimsRef = useRef({ width: 960, height: 540, dpr: 1 });
-  const previousRef = useRef({ status: "menu" as MatchStatus, scorer: null as string | null });
-  const lastTimeRef = useRef(0);
+    const lastTimeRef = useRef(0);
   const frameRef = useRef(0);
   const lastHudRef = useRef(0);
   const [status, setStatus] = useState<MatchStatus>("menu");
@@ -47,7 +42,6 @@ export default function ArcadeFootballGame() {
     inputRef.current = emptyInput();
     keysRef.current.clear();
     lastTimeRef.current = 0;
-    previousRef.current = { status: "playing", scorer: null };
     setStatus("playing");
     setScore({ home: 0, away: 0 });
     setTimeLeft(duration);
@@ -270,7 +264,7 @@ export default function ArcadeFootballGame() {
       <div className="arcade-game__footer"><div className="arcade-stats"><span><b>{shots}</b> SHOTS</span><span><b>{passes}</b> PASSES</span><span><i className={status==="paused"?"arcade-status arcade-status--paused":"arcade-status"}/>{status.toUpperCase()}</span></div><div className="arcade-hint">Click the pitch to focus controls · F for fullscreen</div></div>
       <div className="arcade-match-options"><label>Difficulty<select value={difficulty} onChange={e=>setDifficulty(e.target.value as Difficulty)}><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option></select></label><label>Match length<select value={duration} onChange={e=>setDuration(Number(e.target.value))}><option value={60}>1 minute</option><option value={120}>2 minutes</option><option value={180}>3 minutes</option></select></label><button className="arcade-button arcade-button--quiet" onClick={()=>{const next=!muted;setMuted(next);stateRef.current.muted=next;}}> {muted?"🔇 Sound off":"🔊 Sound on"} </button></div>
       <div className="arcade-controls"><div className="arcade-control"><span className="arcade-control__keys"><kbd>A</kbd><kbd>D</kbd><span>or</span><kbd>←</kbd><kbd>→</kbd></span><span>Move</span></div><div className="arcade-control"><span className="arcade-control__keys"><kbd>W</kbd><kbd>S</kbd><span>or</span><kbd>↑</kbd><kbd>↓</kbd></span><span>Move up / down</span></div><div className="arcade-control"><span className="arcade-control__keys"><kbd>SHIFT</kbd></span><span>Sprint</span></div><div className="arcade-control"><span className="arcade-control__keys"><kbd>SPACE</kbd></span><span>Shoot / charge</span></div><div className="arcade-control"><span className="arcade-control__keys"><kbd>J</kbd></span><span>Pass</span></div><div className="arcade-control"><span className="arcade-control__keys"><kbd>E</kbd></span><span>Switch player</span></div><div className="arcade-control"><span className="arcade-control__keys"><kbd>P</kbd></span><span>Pause</span></div></div>
-      <p className="arcade-note">Small-sided arcade football prototype. Physics, goalkeeping and rule-based AI are intentionally simple and will need browser testing and tuning before publication.</p>
+      <p className="arcade-note">Small-sided arcade football prototype. Physics, goalkeeping and rule-based AI are intentionally simple and need browser testing and tuning before publication.</p>
     </div>
   );
 }
