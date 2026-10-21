@@ -452,8 +452,8 @@ export default function ArcadeFootballGame() {
 
       <div className="arcade-game__footer"><div className="arcade-stats"><span><b>{shots}</b> SHOTS</span><span><b>{passes}</b> PASSES</span><span><i className={status === "paused" ? "arcade-status arcade-status--paused" : "arcade-status"} />{status.toUpperCase()}</span></div><div className="arcade-hint">Click the pitch to focus controls · F for fullscreen</div></div>
       <div className="arcade-match-options">
-        <label>Difficulty<select value={difficulty} onChange={(event) => setDifficulty(event.target.value as Difficulty)}><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option></select></label>
-        <label>Match length<select value={duration} onChange={(event) => setDuration(Number(event.target.value))}><option value={60}>1 minute</option><option value={120}>2 minutes</option><option value={180}>3 minutes</option></select></label>
+        <label>Difficulty<select disabled={status === "playing" || status === "paused" || status === "goal"} value={difficulty} onChange={(event) => setDifficulty(event.target.value as Difficulty)}><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option></select></label>
+        <label>Match length<select disabled={status === "playing" || status === "paused" || status === "goal"} value={duration} onChange={(event) => setDuration(Number(event.target.value))}><option value={60}>1 minute</option><option value={120}>2 minutes</option><option value={180}>3 minutes</option></select></label>
         <button className="arcade-button arcade-button--quiet" onClick={() => { const next = !muted; setMuted(next); stateRef.current.muted = next; }}>{muted ? "🔇 Sound off" : "🔊 Sound on"}</button>
       </div>
 
