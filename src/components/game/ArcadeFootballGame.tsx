@@ -169,7 +169,7 @@ export default function ArcadeFootballGame() {
         p.x = clamp(p.x, 0.055, 0.945);
         p.y = clamp(p.y, 0.13, 0.91);
         p.crouching = down && !left && !right;
-        if (keys.has(" ") && !p.jumping && !up) {
+        if (keys.has("w") && !p.jumping) {
           p.jumping = true;
           p.jumpVelocity = 0.95;
         }
