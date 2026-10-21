@@ -107,12 +107,21 @@ function updateControlledPlayer(state: GameState, input: InputState, dt: number)
     if (player.mode === "run") player.mode = "idle";
   }
   player.actionCooldown = Math.max(0, player.actionCooldown - dt);
+  if (player.actionCooldown === 0 && player.mode === "kick") player.mode = "idle";
   if (input.jump) player.mode = "jump";
   else if (player.mode === "jump") player.mode = "idle";
 
   const ball = state.ball;
   if (ball.possession !== player.id && !ball.possession && ball.z < 0.12 && distance(player, ball) < 0.038 && Math.hypot(ball.vx, ball.vy) < 0.45) {
     givePossession(state, player);
+  }
+
+  if (ball.possession && ball.possession !== player.id) {
+    const holder = state.players.find((p) => p.id === ball.possession);
+    if (holder && holder.team !== player.team && distance(holder, player) < 0.04 && Math.random() < dt * (state.difficulty === "hard" ? 2.2 : 1.1)) {
+      givePossession(state, player);
+      player.actionCooldown = 0.35;
+    }
   }
 
   if (ball.possession === player.id) {
@@ -132,6 +141,7 @@ function updateOutfieldAI(state: GameState, dt: number) {
   for (const player of state.players) {
     if (player.id === state.controlledPlayerId || player.role === "goalkeeper") continue;
     player.actionCooldown = Math.max(0, player.actionCooldown - dt);
+    if (player.actionCooldown === 0 && player.mode === "kick") player.mode = "idle";
     const holder = ball.possession ? state.players.find((p) => p.id === ball.possession) : null;
     const ownPossession = holder?.team === player.team;
     const opponentPossession = holder && holder.team !== player.team;
@@ -167,7 +177,7 @@ function updateOutfieldAI(state: GameState, dt: number) {
       }
     }
 
-    const skill = state.difficulty === "hard" ? 1.2 : state.difficulty === "easy" ? 0.78 : 1;
+    const skill = player.team !== "away" ? 1 : state.difficulty === "hard" ? 1.2 : state.difficulty === "easy" ? 0.78 : 1;
     moveToward(player, tx, ty, player.speed * skill, dt);
 
     if (!ball.possession && ball.z < 0.12 && distance(player, ball) < 0.034 && isClosest) {
