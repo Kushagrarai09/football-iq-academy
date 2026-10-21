@@ -24,7 +24,6 @@ export default function ArcadeFootballGame() {
   const lastFrameRef = useRef(0);
   const lastHudRef = useRef(0);
   const rafRef = useRef(0);
-  const rafRef = useRef(0);
   const shotStartedRef = useRef<number | null>(null);
 
   const [status, setStatus] = useState<MatchStatus>("menu");
