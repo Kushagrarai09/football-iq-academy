@@ -55,6 +55,22 @@ describe("arcade football simulation", () => {
     expect(state.ball.possession).toBe("home-striker");
   });
 
+  it("counts a valid low shot crossing the goal line once", () => {
+    const state = createInitialState();
+    state.status = "playing";
+    state.ball.possession = null;
+    state.players.forEach(p => { p.hasPossession = false; });
+    state.ball.x = 0.963;
+    state.ball.y = 0.5;
+    state.ball.vx = 1.5;
+    state.ball.vy = 0;
+    tickGame(state, emptyInput(), 0.033);
+    expect(state.score.home).toBe(1);
+    expect(state.status).toBe("goal");
+    tickGame(state, emptyInput(), 0.033);
+    expect(state.score.home).toBe(1);
+  });
+
   it("does not simulate when paused", () => {
     const state = createInitialState();
     state.status = "paused";
