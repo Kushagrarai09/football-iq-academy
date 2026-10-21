@@ -181,7 +181,7 @@ export default function ArcadeFootballGame() {
           }
         }
         const isNearBall = Math.abs(b.x - p.x) < 0.065 && Math.abs(b.y - p.y) < 0.07;
-        if (isNearBall && Math.hypot(b.vx, b.vy) < 0.35 && kickTimerRef.current <= 0) {
+        if (isNearBall && Math.hypot(b.vx, b.vy) < 0.18 && kickTimerRef.current <= 0) {
           b.x = p.x + p.facing * 0.045;
           b.y = p.y + 0.025;
         }
