@@ -61,7 +61,8 @@ describe("arcade football simulation", () => {
     state.ball.possession = null;
     state.players.forEach(p => { p.hasPossession = false; });
     state.ball.x = 0.963;
-    state.ball.y = 0.5;
+    state.ball.y = 0.41;
+    state.players.find(p => p.id === "away-keeper")!.y = 0.8;
     state.ball.vx = 1.5;
     state.ball.vy = 0;
     tickGame(state, emptyInput(), 0.033);
