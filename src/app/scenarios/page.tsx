@@ -1,0 +1,5 @@
+"use client";
+import { useState } from "react";
+import { PageHeader } from "@/components/SiteShell";
+import { scenarios } from "@/data/football";
+export default function Scenarios(){const [answers,setAnswers]=useState<Record<number,number>>({});return <><PageHeader eyebrow="Match situation lab" title="What happens next?" description="Read each situation, make a decision and review the explanation. Rule-based answers are example learning content and should be verified against the applicable IFAB law."/><div className="list">{scenarios.map((s,i)=><article className="panel" key={s.title}><div className="tag">{s.category} · Scenario {i+1}</div><h2 style={{fontSize:25}}>{s.title}</h2><p className="muted">{s.prompt}</p>{s.options.map((o,j)=><button key={o} className={`quiz-option ${answers[i]===j?"chosen":""}`} onClick={()=>setAnswers(a=>({...a,[i]:j}))}>{String.fromCharCode(65+j)}. {o}</button>)}{answers[i]!==undefined&&<div className="feedback"><strong>{answers[i]===s.answer?"Correct — ":"Review — "}</strong>{s.explanation}</div>}</article>)}</div></>}

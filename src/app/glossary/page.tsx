@@ -1,0 +1,5 @@
+"use client";
+import { useMemo,useState } from "react";
+import { PageHeader } from "@/components/SiteShell";
+import { glossary } from "@/data/football";
+export default function Glossary(){const [q,setQ]=useState("");const filtered=useMemo(()=>glossary.filter(([t,d,c])=>`${t} ${d} ${c}`.toLowerCase().includes(q.toLowerCase())),[q]);return <><PageHeader eyebrow="Football dictionary" title="Glossary" description="Search football rules, tactics and technique terms. Some terms are informal coaching or statistical language rather than terms defined by the Laws."/><div className="searchrow"><input className="input" value={q} onChange={e=>setQ(e.target.value)} placeholder="Search terms, e.g. pressing or offside" aria-label="Search glossary"/><span className="badge">{filtered.length} terms</span></div><div className="grid">{filtered.map(([t,d,c])=><article className="feature" key={t}><span className="tag">{c}</span><h3 style={{marginTop:12}}>{t}</h3><p>{d}</p></article>)}</div>{filtered.length===0&&<div className="empty">No matching terms. Try another search.</div>}</>}

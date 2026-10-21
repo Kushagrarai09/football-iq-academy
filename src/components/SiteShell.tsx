@@ -1,0 +1,6 @@
+import Link from "next/link";
+import { navItems } from "@/data/football";
+export function SiteHeader(){return <header className="nav"><div className="shell nav-inner"><Link className="brand" href="/"><span className="brand-mark">⚽</span>FOOTBALL IQ</Link><nav className="navlinks" aria-label="Main navigation">{navItems.map(([label,href])=><Link key={href} href={href}>{label}</Link>)}<Link href="/about">About</Link></nav></div></header>}
+export function SiteFooter(){return <footer className="footer"><div className="shell footer-inner"><div><strong>Football IQ Academy</strong><p>Learn the laws. Explore the pitch. Understand the game.</p></div><div><a href="https://www.theifab.com/documents/" target="_blank" rel="noreferrer">Official IFAB sources ↗</a><p className="small">Independent educational project. Not affiliated with IFAB or FIFA.</p></div></div></footer>}
+export function PageHeader({eyebrow,title,description}:{eyebrow:string;title:string;description:string}){return <div className="page-head"><div className="eyebrow">{eyebrow}</div><h1>{title}</h1><p className="lead">{description}</p></div>}
+export function FeatureCard({href,icon,title,description}:{href:string;icon:string;title:string;description:string}){return <Link href={href} className="feature"><div className="iconbox">{icon}</div><h3>{title}</h3><p>{description}</p></Link>}
