@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       : new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
     params.set("from", url.searchParams.get("from") ?? defaultFrom);
     params.set("to", url.searchParams.get("to") ?? defaultTo);
-    params.set("status", type === "finished" ? "FT-AET-PEN" : "NS-TBD");
+    params.set("status", type === "finished" ? "FT,AET,PEN" : "NS,TBD");
   }
   if (league && /^\d+$/.test(league)) params.set("league", league);
 
