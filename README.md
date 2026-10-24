@@ -47,6 +47,16 @@ npm test
 npm run build
 ```
 
+
+
+## Live football match centre (Phase 2)
+
+The `/live` section includes **Live**, **Upcoming**, and **Finished** fixture tabs, a league/competition filter, and a link to each fixture's Match Centre at `/live/[matchId]`.
+
+The Match Centre calls `GET /api/football/matches/[matchId]` for the fixture summary, event timeline (goals, cards and substitutions), statistics, venue/referee metadata where provided, and score by period when available. Active match details refresh every 60 seconds. Event/statistics coverage can vary by competition and API-Football subscription.
+
+The same `API_FOOTBALL_KEY` setup described above is required. The MVP currently makes provider requests directly from server routes and does not use a shared cache; add shared caching and usage controls before expecting high visitor traffic. Browser-side refreshes are limited to the live fixture list and currently active Match Centre.
+
 ## Main routes
 
 `/` home · `/basics` fundamentals · `/pitch` interactive pitch · `/rules` laws · `/positions` roles · `/formations` formations · `/tactics` tactics · `/skills` skills · `/play` arcade game · `/live` live scores · `/scenarios` scenarios · `/referee` referee learning · `/glossary` glossary · `/quiz` quiz · `/about` about.
