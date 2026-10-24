@@ -1,7 +1,7 @@
 export const navItems = [
   ["Basics", "/basics"], ["Pitch", "/pitch"], ["Rules", "/rules"],
   ["Positions", "/positions"], ["Formations", "/formations"], ["Tactics", "/tactics"],
-  ["Skills", "/skills"], ["Play", "/play"], ["Scenarios", "/scenarios"], ["Referee", "/referee"],
+  ["Skills", "/skills"], ["Play", "/play"], ["Live Scores", "/live"], ["Scenarios", "/scenarios"], ["Referee", "/referee"],
   ["Glossary", "/glossary"], ["Quiz", "/quiz"],
 ] as const;
 
