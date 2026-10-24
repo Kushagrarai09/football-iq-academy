@@ -21,6 +21,7 @@ export async function GET(
     ["fixture", `${API_BASE}/fixtures?id=${matchId}`],
     ["events", `${API_BASE}/fixtures/events?fixture=${matchId}`],
     ["statistics", `${API_BASE}/fixtures/statistics?fixture=${matchId}`],
+    ["lineups", `${API_BASE}/fixtures/lineups?fixture=${matchId}`],
   ] as const;
 
   try {
@@ -42,6 +43,7 @@ export async function GET(
       fixture: (data.fixture as unknown[])[0] ?? null,
       events: data.events ?? [],
       statistics: data.statistics ?? [],
+      lineups: data.lineups ?? [],
       updatedAt: new Date().toISOString(),
     }, { headers: { "Cache-Control": "no-store" } });
   } catch {
