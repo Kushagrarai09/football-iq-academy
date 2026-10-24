@@ -1,312 +1,63 @@
-<div align="center">
-
 # ⚽ Football IQ Academy
 
 ### Understand the beautiful game. One decision at a time.
 
-An interactive football learning platform for exploring the Laws of the Game, player positions, formations, tactics, skills, and match situations.
+An interactive football learning platform built with **Next.js, React, TypeScript, and Tailwind CSS**.
 
-Built with **Next.js, React, TypeScript, and Tailwind CSS**.
+## Features
+- Interactive pitch, positions, formations, rules, tactics and quizzes.
+- Arcade football game at `/play`.
+- **Worldwide live scores at `/live`**, using API-Football fixtures with team names, crests, competition, score and status.
+- Loading, empty, setup, and provider-error states.
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)
-![React](https://img.shields.io/badge/React-19-149eca?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06b6d4?logo=tailwindcss)
-![Deployment](https://img.shields.io/badge/Deployment-Vercel-black?logo=vercel)
+## Run locally
 
-</div>
-
----
-
-## 🏟️ About the Project
-
-Football IQ Academy is an interactive educational website designed to make football easier to understand.
-
-Rather than relying only on long explanations, the platform aims to help learners explore football visually through an interactive pitch, player positions, formations, tactical concepts, football rules, and match scenarios.
-
-Whether you're a beginner learning the basics, a fan looking to understand tactics, or a player interested in improving your game knowledge, Football IQ Academy brings essential football concepts together in one place.
-
-### 🎯 Project Goals
-
-- Make football rules easier to understand.
-- Explain player positions and responsibilities.
-- Visualize formations and tactical concepts.
-- Encourage learning through interactive scenarios and quizzes.
-- Provide a responsive and accessible learning experience.
-
-## ✨ Features
-
-### ⚽ Interactive Football Pitch
-Explore a visual football pitch and learn about player positions, responsibilities, and spatial relationships.
-
-### 🧩 Formations and Player Positions
-Discover common football formations and understand how defenders, midfielders, forwards, and goalkeepers contribute to a team's structure.
-
-### 📘 Laws of the Game
-Browse an organized index of the 17 Laws of the Game, with references to official football-rule resources.
-
-### 🧠 Tactical Learning
-Explore concepts such as attacking structure, defensive organization, pressing, spacing, and team movement.
-
-### 🎮 Match Scenarios
-Study football situations, consider possible decisions, and learn why particular outcomes may occur.
-
-### 📝 Interactive Quizzes
-Test your understanding of football rules and concepts through knowledge checks.
-
-### 📖 Football Glossary
-Learn the meanings of common football terms and tactical vocabulary.
-
-### 🏃 Skills and Fundamentals
-Explore foundational football techniques and concepts for developing a better understanding of the game.
-
-### 📱 Responsive Interface
-Designed to provide a usable experience across desktop, tablet, and mobile screens.
-
-> **Note:** The README describes the intended project experience. Check the live implementation before assuming every feature or interaction is complete.
-
-## 🧭 Website Sections
-
-| Route | Description |
-|---|---|
-| `/` | Homepage and learning-section navigation |
-| `/basics` | Football fundamentals |
-| `/pitch` | Interactive pitch exploration |
-| `/rules` | Index of the 17 Laws of the Game |
-| `/rules/[slug]` | Individual football-law pages |
-| `/positions` | Player positions and responsibilities |
-| `/formations` | Football formation exploration |
-| `/tactics` | Tactical concepts and team play |
-| `/skills` | Football techniques and skills |
-| `/scenarios` | Match situations and decision practice |
-| `/referee` | Referee-related learning and decisions |
-| `/glossary` | Football terminology |
-| `/quiz` | Interactive knowledge checks |
-| `/about` | Project information |
-
-## 🛠️ Technology Stack
-
-| Technology | Purpose |
-|---|---|
-| Next.js | Application framework and routing |
-| React | Component-based user interface |
-| TypeScript | Type-safe JavaScript development |
-| Tailwind CSS | Styling and responsive layouts |
-| SVG | Interactive pitch visualizations |
-| Lucide React | Interface icons |
-| Vercel | Recommended deployment platform |
-
-## 🚀 Getting Started
-
-Follow these instructions to run Football IQ Academy locally.
-
-### Prerequisites
-
-Install the following tools before starting:
-
-- Node.js 20.9 or newer
-- npm
-- Git
-- Visual Studio Code or another code editor
-
-### 1. Clone the repository
-
-Replace `<your-username>` with your GitHub username.
+Requirements: Node.js 20.9+ and npm.
 
 ```bash
-git clone https://github.com/<your-username>/football-iq-academy.git
-```
-
-Move into the project directory:
-
-```bash
+git clone https://github.com/Kushagrarai09/football-iq-academy.git
 cd football-iq-academy
-```
-
-### 2. Install dependencies
-
-```bash
 npm install
-```
-
-### 3. Start the development server
-
-```bash
+cp .env.example .env.local
 npm run dev
 ```
 
-Open the following address in your browser:
+Open [http://localhost:3000](http://localhost:3000).
 
-```text
-http://localhost:3000
-```
+## Configure live scores
 
-### 4. Build for production
+1. Create an account at [API-Football](https://www.api-football.com/) and review current competition coverage, rate limits, plan terms and update frequency.
+2. Add your key to `.env.local`:
 
-Verify that the application can produce a production build:
+   ```env
+   API_FOOTBALL_KEY=your_actual_api_key
+   ```
 
-```bash
-npm run build
-```
+3. Restart the local dev server and visit [http://localhost:3000/live](http://localhost:3000/live).
+4. For Vercel, add `API_FOOTBALL_KEY` to Project Settings → Environment Variables and redeploy.
 
-To run the production build locally:
+**Security:** this key is only read by `src/app/api/football/live/route.ts` on the server. Do not use `NEXT_PUBLIC_`, expose it in client components, or commit a real key. The `.env.example` value is a placeholder.
 
-```bash
-npm run start
-```
+`GET /api/football/live` calls the provider's `/fixtures?live=all` endpoint and sends the key in the `x-apisports-key` header. It returns `{ matches, updatedAt }` on success; missing keys and upstream failures return controlled error responses. The page refreshes every 60 seconds. This MVP does not yet implement a shared cache, so add caching and quota protection before heavy traffic. Match coverage and details depend on the provider and subscription. This is match data, not live video.
 
-The production server uses the default port unless configured otherwise.
-
-## ☁️ Deployment on Vercel
-
-Football IQ Academy is designed to be deployed as a Next.js application.
-
-### Deployment steps
-
-1. Push the project to a GitHub repository.
-2. Sign in to Vercel using your GitHub account.
-3. Select **Add New → Project**.
-4. Import the `football-iq-academy` repository.
-5. Confirm that Vercel detects Next.js.
-6. Review the build settings.
-7. Click **Deploy**.
-8. Open the deployed website and test its routes and interactions.
-
-**Deployment platform:** [Vercel](https://vercel.com/)
-
-After connecting the repository, Vercel can automatically deploy subsequent changes pushed to the configured Git branch.
-
-## 📂 Project Structure
-
-The main application is organized around the Next.js App Router.
-
-```text
-football-iq-academy/
-├── public/
-├── src/
-│   └── app/
-│       ├── about/
-│       ├── basics/
-│       ├── formations/
-│       ├── glossary/
-│       ├── pitch/
-│       ├── positions/
-│       ├── quiz/
-│       ├── referee/
-│       ├── rules/
-│       ├── scenarios/
-│       ├── skills/
-│       ├── tactics/
-│       ├── globals.css
-│       ├── layout.tsx
-│       └── page.tsx
-├── .env.example
-├── .gitignore
-├── next.config.ts
-├── package.json
-├── postcss.config.mjs
-├── README.md
-└── tsconfig.json
-```
-
-*The exact folders and files may vary slightly depending on the current implementation.*
-
-## 🗺️ Future Improvements
-
-Potential enhancements for future development include:
-
-- [ ] Add browser-based tests for navigation and interactive components.
-- [ ] Improve keyboard navigation and accessibility.
-- [ ] Add more interactive tactical diagrams.
-- [ ] Expand formation comparisons and match scenarios.
-- [ ] Improve quiz feedback and explanations.
-- [ ] Add more visual examples of set pieces and team movement.
-- [ ] Review football-law content against the latest official edition.
-- [ ] Add screenshots and a demonstration GIF to the README.
-- [ ] Optimize performance and test mobile layouts.
-- [ ] Set up continuous integration for automated build checks.
-
-## 📚 Official Resources and Documentation
-
-Football rules can change, so official sources should be used when checking law details and referee decisions.
-
-- [IFAB — Laws of the Game](https://www.theifab.com/laws/)
-- [IFAB — Official Documents](https://www.theifab.com/documents/)
-- [FIFA Football for Schools](https://footballforschools.fifa.com/en/index.php)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [React Documentation](https://react.dev/)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Vercel Documentation](https://vercel.com/docs)
-
-## ⚠️ Disclaimer
-
-Football IQ Academy is an independent educational project. It is not affiliated with or endorsed by FIFA or the International Football Association Board (IFAB).
-
-The educational explanations and match scenarios are intended to support learning. For official interpretations, consult the current IFAB Laws of the Game and applicable competition regulations.
-
-Verify the accuracy of football-law content and the licensing of external assets before using the project in a formal educational or commercial setting.
-
-## 🤝 Contributing
-
-Contributions, suggestions, and bug reports are welcome.
-
-Before submitting a change:
-
-1. Create a branch for your work.
-2. Keep changes focused and easy to review.
-3. Cite authoritative sources when changing football-law explanations.
-4. Run the production build.
-5. Test the affected pages and interactions.
-6. Explain your changes and how you tested them in the pull request.
-
-## 📄 License
-
-No open-source license has been specified yet.
-
-Until a license is added to the repository, assume that standard copyright applies. Do not assume that the project is licensed under MIT or another open-source license.
-
----
-
-<div align="center">
-
-### ⚽ Made for people who want to see more than just the ball.
-
-**Football IQ Academy**
-
-</div>
-
-## Arcade Football Game
-
-The `/play` route contains a small-sided, side-view football game prototype with simple physics and rule-based computer opponents.
-
-### Run locally
-
-```bash
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000/play`.
-
-### Controls
-
-- `A` / `D` or arrow keys: move
-- `W` / `S` or up/down arrows: move through the play area
-- `Shift`: sprint
-- Hold `Space`, then release: charge and take a shot
-- `J`: pass to a teammate
-- `E`: switch the controlled teammate
-- `P`: pause or resume
-- `F`: enter or exit fullscreen
-
-The match offers selectable 1, 2 or 3 minute durations, easy/normal/hard AI settings, sound on/off, score, kickoff reset and a full-time screen. The simulation is intentionally simplified; it is not a full reproduction of football laws or professional game physics.
-
-### Game checks
+## Build and test
 
 ```bash
 npm test
 npm run build
 ```
 
-The GitHub Actions workflow `.github/workflows/game-checks.yml` runs simulation tests and builds the Next.js application for pull requests into `main`.
+## Main routes
+
+`/` home · `/basics` fundamentals · `/pitch` interactive pitch · `/rules` laws · `/positions` roles · `/formations` formations · `/tactics` tactics · `/skills` skills · `/play` arcade game · `/live` live scores · `/scenarios` scenarios · `/referee` referee learning · `/glossary` glossary · `/quiz` quiz · `/about` about.
+
+## Resources
+- [IFAB — Laws of the Game](https://www.theifab.com/laws/)
+- [API-Football documentation](https://www.api-football.com/documentation-v3)
+- [Next.js documentation](https://nextjs.org/docs)
+- [Vercel documentation](https://vercel.com/docs)
+
+## Disclaimer
+Football IQ Academy is an independent educational project and is not affiliated with FIFA or IFAB. Match data may be delayed or incomplete. Verify data and asset licensing terms before commercial use.
+
+No open-source license has been specified. Until one is added, assume standard copyright applies.
