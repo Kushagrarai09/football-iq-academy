@@ -20,10 +20,15 @@ export async function GET(request: Request) {
   if (type === "live") {
     params.set("live", "all");
   } else {
-    const from = url.searchParams.get("from") ?? new Date().toISOString().slice(0, 10);
-    const to = url.searchParams.get("to") ?? new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
-    params.set("from", from);
-    params.set("to", to);
+    const today = new Date().toISOString().slice(0, 10);
+    const defaultFrom = type === "finished"
+      ? new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10)
+      : today;
+    const defaultTo = type === "finished"
+      ? today
+      : new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
+    params.set("from", url.searchParams.get("from") ?? defaultFrom);
+    params.set("to", url.searchParams.get("to") ?? defaultTo);
     params.set("status", type === "finished" ? "FT-AET-PEN" : "NS-TBD");
   }
   if (league && /^\d+$/.test(league)) params.set("league", league);
